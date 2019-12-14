@@ -15,7 +15,7 @@ test('RECEIVE_LAST', () => {
     stocks: stocks3,
   });
 
-  const selectedStocks = selectStockList({stock: secondState});
+  const selectedStocks = selectStockList({stocks: secondState});
   expect(selectedStocks).toHaveLength(3);
   expect(selectedStocks.map(s => s.index)).toEqual([0, 1, 2]);
 });

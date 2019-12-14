@@ -10,8 +10,7 @@ test('selectLast20', () => {
     stocks,
   });
 
-  const selected20 = selectStocksLast20({ stock: state });
-  const selected20_2 = selectStocksLast20({ stock: state });
+  const selected20 = selectStocksLast20({ stocks: state });
   expect(selected20).toHaveLength(20);
   expect(selected20[0].index).toBe(30);
   expect(selected20[19].index).toBe(49);
