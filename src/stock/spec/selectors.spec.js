@@ -1,7 +1,7 @@
 import { getDefaultStockState } from '../state';
 import { stockReducer } from '../reducer';
 import { selectStocksLast20 } from '../selectors';
-import { generateStocks } from './helpers';
+import { generateStocks } from './test-helpers';
 
 test('selectLast20', () => {
   const stocks = generateStocks(50);
