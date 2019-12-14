@@ -1,7 +1,7 @@
-
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { appReducer } from './reducer';
 
 const stores = {};
@@ -16,7 +16,9 @@ export function createAppStore(id = 'default') {
     middlewares.push(createLogger());
   }
 
-  const store = createStore(appReducer, applyMiddleware(...middlewares));
+  const store = createStore(appReducer, composeWithDevTools(
+    applyMiddleware(...middlewares)
+  ));
 
   stores[id] = store;
 
