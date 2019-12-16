@@ -8,11 +8,15 @@ import { GridRow } from './ui/grid-row';
 import * as uiActions from './ui/actions';
 import * as stockActions from './stock/actions';
 import { selectStocksLast20 } from './stock/selectors';
+import { StockChart } from './stock/stock-chart';
 
 function App(props) {
   const AppContainer = createStyledAppContainer();
+  const ChartContainer = createStyledChartContainer();
+
   let nasdaqValues = [];
   let cac40Values = [];
+  let chartData = [];
   props.stocks20.forEach(entry => {
     nasdaqValues.push({
       value: entry.stocks.NASDAQ,
@@ -22,7 +26,9 @@ function App(props) {
       value: entry.stocks.CAC40,
       id: entry.timestamp,
     });
+    chartData.push(entry.stocks)
   })
+
 
   return (
     <AppContainer>
@@ -44,6 +50,9 @@ function App(props) {
         ]
       }
     />
+    <ChartContainer>
+      <StockChart data={chartData} />
+    </ChartContainer>
     </AppContainer>
   );
 }
@@ -62,6 +71,17 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+function createStyledChartContainer() {
+  return styled.div`
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    width: 800px;
+    height: 600px;
+    background-color: #fff;
+  `;
+}
 
 function createStyledAppContainer() {
   return styled.div`
