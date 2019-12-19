@@ -41,3 +41,12 @@ export function startSyncStocksService(dispatch) {
 
   return () => { clearInterval(timerId) };
 }
+
+export function editStockValue(id, stockName, value) {
+  return {
+    type: 'stock/EDIT_VALUE',
+    id,
+    stockName,
+    value,
+  };
+}

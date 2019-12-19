@@ -4,6 +4,23 @@ import * as tools from './tools';
 
 export const stockReducer = (state, action) => {
   switch (action.type) {
+    case 'stock/REDUCE_SIZE':
+      // TODO: check the need to clean
+      return state;
+    case 'stock/EDIT_VALUE':
+      return {
+        ...state,
+        byIdEdited: {
+          ...state.byIdEdited,
+          [action.id]: {
+            ...state.byIdEdited[action.id],
+            stocks: {
+              ...(state.byIdEdited[action.id] && state.byIdEdited[action.id].stocks),
+              [action.stockName]: action.value,
+            },
+          },
+        },
+      };
     case 'stock/FETCH_COMPLETED':
       return {
         ...state,

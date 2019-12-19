@@ -1,11 +1,11 @@
 
 import React from 'react';
 import { render } from '@testing-library/react';
-import { GridRow } from '../';
+import { EditGridRow } from '../edit-grid-row';
 
 test('renders grid', () => {
   const { getByText, getByTestId, container } = render(
-    <GridRow label="label_test" values={[
+    <EditGridRow label="label_test" values={[
       {id: 'id1', value: 'val1'},
       {id: 'id2', value: 'val2'},
       {id: 'id3', value: 'val3'},
