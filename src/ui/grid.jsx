@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 
@@ -30,7 +30,7 @@ export function Grid(props) {
   const [colWidths, setColsWidths] = useState([]);
 
   // after render, ensure the widths of columns are good
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (colWidthChanged.current) {
       checkColumnWidth();
       colWidthChanged.current = false;

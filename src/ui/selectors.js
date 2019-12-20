@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+import { createResultMemoizedSelector } from '../redux-tools';
 import * as stockSelectors from '../stock/selectors';
 
 export const selectUiState = state => state.ui;
@@ -23,7 +24,7 @@ export const selectUiDisplayRangeStartId = state => {
   return selectUiState(state).displayRangeStartId;
 }
 
-export const selectStockValuesToDisplay = createSelector(
+const _selectStockValuesToDisplay = createSelector(
   stockSelectors.selectUpdatedStockList,
   stockSelectors.selectStocksLast10,
   stockSelectors.selectStocksLast20,
@@ -49,3 +50,19 @@ export const selectStockValuesToDisplay = createSelector(
     return stocks.slice(ix, ix + size);
   }
 );
+
+/**
+ * Get the memoized stock values
+ * It is memoized by dependencies and by result, i.e. the resulted list is deep
+ * equally compared and the same instance is returned if the stocks inside are
+ * the same, even if ids/byId state objects have changed.
+ * We use _selectStockValuesToDisplay because
+ * createSelectorCreator makes the dependencies being memoized by the custom
+ * function of createResultMemoizedSelector, which is heavier and useless, we
+ * just want the final list to be memoized
+ */
+export const selectStockValuesToDisplay = createResultMemoizedSelector(
+  _selectStockValuesToDisplay,
+  res => res
+);
+

@@ -5,11 +5,10 @@ import App from './app';
 import { createAppStore } from './store';
 import { fetchLastStocks, startSyncStocksService } from './stock/actions';
 
-// TODO create init fn
-
 const store = createAppStore();
 store.dispatch({type: 'INIT'});
 store.dispatch(fetchLastStocks());
+
 const stopService = startSyncStocksService(store.dispatch);
 
 ReactDOM.render(

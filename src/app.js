@@ -19,9 +19,7 @@ const Chart = React.memo(StockChart, (prev, next) => {
 
 function App(props) {
 
-  // The stocks array from the store will be different each second even when
-  // paused. We memoize the computed array to keep ths array references between
-  // renderings
+  //TODO: think about moving in selectors
   const memoValues = React.useMemo(() => {
     return props.stocks.reduce((acc, cur) => {
       acc.nasdaqValues.push({
@@ -42,14 +40,7 @@ function App(props) {
       cac40Values: [],
       chartData: [],
     });
-  }, [
-    props.stocks.length,
-    props.stocks[props.stocks.length - 1] &&
-      props.stocks[props.stocks.length - 1].id,
-    props.startId,
-    props.selectRangeSize,
-    props.cellBeingEdited
-  ]);
+  }, [ props.stocks ]);
 
   const { nasdaqValues, cac40Values, chartData } = memoValues;
 
@@ -121,7 +112,7 @@ function createStyledChartContainer() {
     left: 100px;
     width: 1040px;
     height: 620px;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border: solid 2px #d2d2d2;
     background-color: #fff;
   `;

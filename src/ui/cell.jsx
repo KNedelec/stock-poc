@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 const CELL_MIN_WIDTH = 64;
@@ -31,7 +31,7 @@ const StyledCell = styled.div`
 function UnmemoCell(props) {
 
   if (props.editMode && !/number|string/.test(typeof props.children)) {
-    throw('editMode not compatible with props.children');
+    throw Error('editMode not compatible with props.children');
   }
 
   // cell DOM element
@@ -41,7 +41,7 @@ function UnmemoCell(props) {
   // value and width states of the cell
   let [value, setValue] = useState(props.value || props.children);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // The parent may ask to know if the cell content width has changed to
     // resize every cell of the column
     if (props.onUpdateWidth) {
@@ -57,7 +57,7 @@ function UnmemoCell(props) {
     }
   }, [props, props.width]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (props.editMode) {
       const rect = cellEl.current.getBoundingClientRect();
       // set the position of the input
