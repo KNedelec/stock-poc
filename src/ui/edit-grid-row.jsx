@@ -4,16 +4,7 @@ import { GridRow } from './grid-row';
 
 import { Cell } from './cell';
 
-export const EditGridRow = React.memo(UnmemEditGridRow, (prev, next) => {
-  let memoized = prev.values.length === next.values.length
-    && prev.values.every((o, ix) => o.value === next.values[ix].value)
-    && prev.colWidths === next.colWidths
-    && prev.cellBeingEdited === next.cellBeingEdited;
-
-  return memoized;
-});
-
-function UnmemEditGridRow(props) {
+export function EditGridRow(props) {
 
   // ref storing the widths of each cell
   const colWidths = useRef([]);

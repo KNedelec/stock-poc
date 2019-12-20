@@ -6,13 +6,9 @@ import { editStockValue } from '../stock/actions';
 export function beginEditCell(cellId) {
   return (dispatch, getState) => {
 
-    //get the first the id of the displayed list
-    //so we can pause the scrolling
-    const startId = selectStockValuesToDisplay(getState())[0].id;
-
     batch(() => {
       //set pause
-      dispatch(pauseScrolling(startId));
+      dispatch(pauseScrolling());
 
       //set editMode
       dispatch(editCellRequested(cellId));
@@ -37,10 +33,17 @@ export function editCellRequested(cellId) {
   }
 }
 
-export function pauseScrolling(startId) {
-  return {
-    type: 'ui/PAUSE_SCROLLING',
-    startId,
+export function pauseScrolling() {
+
+  return (dispatch, getState) => {
+    //get the first the id of the displayed list
+    //so we can pause the scrolling
+    const startId = selectStockValuesToDisplay(getState())[0].id;
+
+    dispatch({
+      type: 'ui/PAUSE_SCROLLING',
+      startId,
+    });
   };
 }
 

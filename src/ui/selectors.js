@@ -24,6 +24,12 @@ export const selectUiDisplayRangeStartId = state => {
   return selectUiState(state).displayRangeStartId;
 }
 
+/**
+ * Get the stock values
+ * In the case of a list of stock values being refreshed every second, this
+ * memo has a 1 second lifetime at best. That's why it is not the selector
+ * effectively used, see below.
+ */
 const _selectStockValuesToDisplay = createSelector(
   stockSelectors.selectUpdatedStockList,
   stockSelectors.selectStocksLast10,

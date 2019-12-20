@@ -3,13 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 
+import * as stockActions from './stock/actions';
 import { Grid } from './ui/grid';
 import { GridRow } from './ui/grid-row';
 import { EditGridRow } from './ui/edit-grid-row';
 import * as uiActions from './ui/actions';
-import * as stockActions from './stock/actions';
 import * as uiSelectors from './ui/selectors';
-import { StockChart } from './stock/stock-chart';
+import { StockChart } from './ui/stock-chart';
+import { ScrollCommands } from './ui/scroll-commands';
 
 const AppContainer = createStyledAppContainer();
 const ChartContainer = React.memo(createStyledChartContainer());
@@ -19,7 +20,7 @@ const Chart = React.memo(StockChart, (prev, next) => {
 
 function App(props) {
 
-  //TODO: think about moving in selectors
+  //TODO: think about moving it in selectors
   const memoValues = React.useMemo(() => {
     return props.stocks.reduce((acc, cur) => {
       acc.nasdaqValues.push({
@@ -82,6 +83,11 @@ function App(props) {
       />
       <ChartContainer>
         <Chart data={chartData} />
+        <ScrollCommands
+          paused={props.scrollPaused}
+          clickPause={props.pauseScrolling}
+          clickPlay={props.unpauseScrolling}
+        />
       </ChartContainer>
     </AppContainer>
   );
@@ -93,6 +99,7 @@ function mapStateToProps(state) {
     cellBeingEdited: uiSelectors.selectUiCellBeingEdited(state),
     startId: uiSelectors.selectUiDisplayRangeStartId(state),
     selectRangeSize: uiSelectors.selectUiDisplayRangeSize(state),
+    scrollPaused: uiSelectors.selectUiIsScrollingPaused(state),
   };
 }
 
