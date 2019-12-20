@@ -12,7 +12,10 @@ import * as uiSelectors from './ui/selectors';
 import { StockChart } from './stock/stock-chart';
 
 const AppContainer = createStyledAppContainer();
-const ChartContainer = createStyledChartContainer();
+const ChartContainer = React.memo(createStyledChartContainer());
+const Chart = React.memo(StockChart, (prev, next) => {
+  return prev.data === next.data;
+});
 
 function App(props) {
 
@@ -86,12 +89,12 @@ function App(props) {
           ]
         }
       />
+      <ChartContainer>
+        <Chart data={chartData} />
+      </ChartContainer>
     </AppContainer>
   );
 }
-    // <ChartContainer>
-    //   <StockChart data={chartData} />
-    // </ChartContainer>
 
 function mapStateToProps(state) {
   return {
@@ -114,10 +117,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 function createStyledChartContainer() {
   return styled.div`
     position: absolute;
-    top: 200px;
-    left: 200px;
-    width: 800px;
-    height: 600px;
+    top: 100px;
+    left: 100px;
+    width: 1040px;
+    height: 620px;
+    padding: 10px 20px;
+    border: solid 2px #d2d2d2;
     background-color: #fff;
   `;
 }

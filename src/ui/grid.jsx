@@ -123,7 +123,6 @@ export function Grid(props) {
 
 const Col = styled.div`
   height: 100%;
-  border-right: solid 2px rgba(0, 0, 0, 0);
   padding: 2px;
   min-width: ${props => (props.width || 64) - 6}px;
   border-right: solid 2px #d2d2d2;
@@ -169,6 +168,6 @@ function createContainer() {
     position: relative;
     top: 0;
     left: 0;
-    overflow: hidden;
+    overflow-x: hidden;
   `;
 }
